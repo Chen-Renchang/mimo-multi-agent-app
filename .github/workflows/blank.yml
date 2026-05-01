@@ -1,0 +1,28 @@
+name: 🩺 代码库健康度扫描
+
+on:
+  workflow_dispatch:   # 允许在 GitHub 网页上手动点击运行
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # 拉取全部提交历史
+
+      - name: 运行健康度分析 Agent
+        run: python scripts/analyze.py
+
+      - name: 部署报告到 GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          destination_dir: report
