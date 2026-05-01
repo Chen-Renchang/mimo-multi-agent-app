@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0   # 拉取全部提交历史
 
       - name: 运行健康度分析 Agent
-        run: python scripts/analyze.py
+        run: python analyze.py
 
       - name: 部署报告到 GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
